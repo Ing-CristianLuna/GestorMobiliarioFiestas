@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int              @id @default(autoincrement())
+  nombre          String
+  correo          String           @unique
+  password        String
+  mensajeChatBots MensajeChatBot[]
+}
+
+model Local {
+  id          Int          @id @default(autoincrement())
+  nombre      String
+  direccion   String
+  telefono    String
+  empleados   Empleado[]
+  contratos   Contrato[]
+  inventarios Inventario[]
+}
+
+model Empleado {
+  id         Int    @id @default(autoincrement())
+  nombre     String
+  apellido_p String
+  apellido_m String
+  edad       Int
+  puesto     String
+  direccion  String
+  id_local   Int
+  local      Local  @relation(fields: [id_local], references: [id], onDelete: Cascade)
+}
+
+model MensajeChatBot {
+  id           Int      @id @default(autoincrement())
+  contenido    String   @db.Text
+  rol          String
+  fecha_y_hora DateTime
+  id_user      Int
+  user         User     @relation(fields: [id_user], references: [id], onDelete: Cascade)
+}
+
+model Contrato {
+  id                  Int                 @id @default(autoincrement())
+  fecha_renta         DateTime
+  fecha_entrega       DateTime?
+  telefono_referencia String
+  estado              String
+  pago_total          Float
+  direccion_entrega   String
+  id_cliente          Int
+  id_local            Int
+  local               Local               @relation(fields: [id_local], references: [id], onDelete: Cascade)
+  cliente             Cliente             @relation(fields: [id_cliente], references: [id])
+  productos           Contrato_Producto[]
+}
+
+model Cliente {
+  id                Int        @id @default(autoincrement())
+  nombre            String
+  apellido_p        String     @default("")
+  apellido_m        String     @default("")
+  direccion_cliente String
+  telefono          String
+  contratos         Contrato[]
+}
+
+model Contrato_Producto {
+  id              Int      @id @default(autoincrement())
+  id_contrato     Int
+  contrato        Contrato @relation(fields: [id_contrato], references: [id], onDelete: Cascade)
+  id_producto     Int
+  producto        Producto @relation(fields: [id_producto], references: [id], onDelete: Cascade)
+  cantidad        Int
+  precio_unitario Float?
+}
+
+model Producto {
+  id              Int                 @id @default(autoincrement())
+  producto        String
+  descripcion     String              @default("")
+  precio_unitario Float?
+  contratos       Contrato_Producto[]
+  inventarios     Inventario[]
+}
+
+model Inventario {
+  id                  Int @id @default(autoincrement())
+  cantidad_total      Int
+  cantidad_disponible Int
+  cantidad_ocupada    Int
+
+  id_local    Int
+  id_producto Int
+  local       Local    @relation(fields: [id_local], references: [id], onDelete: Cascade)
+  producto    Producto @relation(fields: [id_producto], references: [id], onDelete: Cascade)
+}
+
+//para migrar: npx prisma migrate dev --name init
