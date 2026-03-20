@@ -7,14 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id              Int              @id @default(autoincrement())
-  nombre          String
-  correo          String           @unique
-  password        String
-  mensajeChatBots MensajeChatBot[]
-}
-
 model Local {
   id          Int          @id @default(autoincrement())
   nombre      String
@@ -23,6 +15,17 @@ model Local {
   empleados   Empleado[]
   contratos   Contrato[]
   inventarios Inventario[]
+  users       User[]
+}
+
+model User {
+  id              Int              @id @default(autoincrement())
+  nombre          String
+  correo          String           @unique
+  password        String
+  id_local        Int?
+  local           Local?           @relation(fields: [id_local], references: [id])
+  mensajeChatBots MensajeChatBot[]
 }
 
 model Empleado {

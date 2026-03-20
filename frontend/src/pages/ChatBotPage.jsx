@@ -6,7 +6,7 @@ import { createMensaje } from "../api/mensaje.api";
 
 export function ChatBotPage() {
     const [mensajesGuardados, setMensajesGuardados] = useState([]);
-    //const [mensajeAEnviar, setMensajeAEnviar] = useState("");
+
 
     useEffect(() => {
         cargaMensajesGuardados();
@@ -42,14 +42,13 @@ export function ChatBotPage() {
         } catch (error) {
             console.log(error);
         }
-
     };
 
 
 
     return (
-        <main className="container p-5 mx-5 mt-5">
-            <Chatbot mensajesGuardados={mensajesGuardados} enviar={enviar} />
+        <main className="container p-5 mx-5 mt-3">
+            <Chatbot mensajesGuardados={mensajesGuardados} enviar={enviar} actualizaMensajes={cargaMensajesGuardados} />
         </main>
     )
 }
