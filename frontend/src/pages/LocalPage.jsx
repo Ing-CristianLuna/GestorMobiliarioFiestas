@@ -22,15 +22,9 @@ export function LocalPage() {
         cargaLocales();
     }, [])
 
-    /*useEffect(() => {
-        if (idDetalles) {
-            setActivaModal(true);
-        }
-    }, [idDetalles]);*/
-
 
     return (
-        <main className="container mx-5 mt-5 p-5">
+        <main className="container mx-5 mt-3 p-5">
             <LocalForm actualizaTabla={cargaLocales} />
             <TablaLocales locales={locales} idDetalles={setIdDetalles} activaModal={setActivaModal} />
             {activaModal == true && <ModalLocal idDetalles={idDetalles} cerrarModal={cerrarModal} actualizaTabla={cargaLocales} />}

@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 exports.getInventariosPrisma = async (req, res) => {
     try {
         const resultados = await prisma.inventario.findMany({
-            include: { producto: true }
+            include: { producto: true, local: true }
         })
         res.json(resultados);
     } catch (error) {

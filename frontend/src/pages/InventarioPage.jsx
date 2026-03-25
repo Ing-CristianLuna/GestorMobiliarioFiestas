@@ -24,7 +24,7 @@ export function InventarioPage() {
     }, []);
 
     return (
-        <main className="container p-5 mx-5 my-5">
+        <main className="container p-5 my-5">
             <button className="btn btn-primary col-md-12" onClick={() => { setCrea(true); setMuestraModal(true); }}>Crear Inventario</button>
             <TablaInventarios inventarios={inventarios} mandaInventario={setInventario} muestraModal={setMuestraModal} />
             {muestraModal && <ModalInventario inventario={inventario} agrega={crea} cerrarModal={cerrarModal} actualizaTabla={cargaInventarios} />}

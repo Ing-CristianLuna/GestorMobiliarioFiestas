@@ -13,7 +13,7 @@ export function FormLogin() {
     })
 
     return (
-        <main className="card card-body">
+        <main className="card card-body mx-auto" style={{ maxWidth: "500px" }}>
             <h2>Login</h2>
             <form onSubmit={onSubmit}>
                 <div className="row g-3">

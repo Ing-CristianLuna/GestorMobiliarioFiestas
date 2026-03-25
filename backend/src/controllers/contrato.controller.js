@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 //encontrar
 exports.getContratosPrisma = async (req, res) => {
     try {
-        const contratos = await prisma.contrato.findMany();
+        const contratos = await prisma.contrato.findMany({ include: { cliente: true, local: true } });
         res.json(contratos);
     } catch (error) {
         res.status(500).json({ message: "Error al encontrar" });

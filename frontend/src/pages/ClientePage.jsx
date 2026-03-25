@@ -27,7 +27,7 @@ export function ClientePage() {
     }, []);
 
     return (
-        <main className="container my-5 mx-5 p-5">
+        <main className="container my-5  p-5">
             <button className="btn btn-primary col-md-12" onClick={() => { setAgrega(true); activarModal(); }}>Agregar Cliente</button>
             < TablaCliente clientes={clientes} clienteDetalles={setCliente} activarModal={activarModal} />
             {activaModal && < ModalCliente cliente={cliente} agrega={agrega} cerrarModal={cerrarModal}

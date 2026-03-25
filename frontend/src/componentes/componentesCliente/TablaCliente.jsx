@@ -1,7 +1,13 @@
+import { Pagina } from "../../utils/Paginacion";
+import { Paginador } from "../Paginador";
+import { useState } from "react";
 
 export function TablaCliente({ clientes, clienteDetalles, activarModal }) {
+    const [paginaActual, setPaginaActual] = useState(1);
+    const { datosAMostrar, numeroPaginas } = Pagina(clientes, paginaActual)
+
     return (
-        <main className="card card-body mt-3">
+        <main className="card card-body mt-3 position-relative" style={{ minHeight: "500px" }}>
             <table className="table">
                 <thead>
                     <tr>
@@ -14,7 +20,7 @@ export function TablaCliente({ clientes, clienteDetalles, activarModal }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {clientes.map(cliente => (
+                    {datosAMostrar.map(cliente => (
                         <tr key={cliente.id}>
                             <td>{cliente.nombre}</td>
                             <td>{cliente.apellido_p}</td>
@@ -26,6 +32,10 @@ export function TablaCliente({ clientes, clienteDetalles, activarModal }) {
                     ))}
                 </tbody>
             </table>
+            <div className="position-absolute bottom-0 start-50 translate-middle-x mb-3">
+                <Paginador numeroPaginas={numeroPaginas} paginaActual={paginaActual} setPaginaActual={setPaginaActual} />
+            </div>
+
         </main>
     )
 }

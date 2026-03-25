@@ -27,7 +27,7 @@ export function DetallesContratoPage() {
     }, [])
 
     return (
-        <main className="container mx-5 mt-5 p-5">
+        <main className="container mt-5 p-5">
             <button className="btn btn-primary my-3 col-md-12" onClick={
                 () => { setMuestraModal(true); setAgrega(true); }}>
                 Agregar Detalles</button>

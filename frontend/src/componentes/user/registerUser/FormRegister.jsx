@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { registerUser } from "../../../api/user.api";
 import { useNavigate } from "react-router-dom";
+import { SelectLocal } from "../../selects/SelectLocal";
 
 export function FormRegister() {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
@@ -14,14 +15,17 @@ export function FormRegister() {
     });
 
     return (
-        <main className="card card-body">
+        <main className="card card-body mx-auto" style={{ maxWidth: "500px" }}>
             <h2>Registro de Usuario</h2>
             <form onSubmit={onSubmit}>
                 <div className="row g-3">
-                    <div className="col-md-12">
-                        <label className="form-label">Ingrese su nombre completo:</label>
+                    <div className="col-md-6">
+                        <label className="form-label">Ingrese su nombre y apellido:</label>
                         <input className="form-control" type="text" placeholder="nombre..." {...register("nombre", { required: true })}></input>
                         {errors.nombre && <span>Es requerido su nombre.</span>}
+                    </div>
+                    <div className="col-md-6">
+                        <SelectLocal register={register} errors={errors} />
                     </div>
                     <div className="col-md-12">
                         <label className="form-label">Ingrese su correo:</label>

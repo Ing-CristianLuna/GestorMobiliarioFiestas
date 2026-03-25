@@ -28,7 +28,7 @@ export function EmpleadoPage() {
 
 
     return (
-        <main className="container mx-5 my-5 p-5">
+        <main className="container my-5 p-5">
             <button className="btn btn-primary col-md-12" onClick={() => { setAgrega(true); abreModal(); }}>Agregar Empleado</button>
 
             <TablaEmpleado empleados={empleados} mandaEmpleado={setEmpleado} abreModal={abreModal} />

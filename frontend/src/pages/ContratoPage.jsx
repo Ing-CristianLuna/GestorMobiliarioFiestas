@@ -27,7 +27,7 @@ export function ContratoPage() {
 
 
     return (
-        <main className="mx-5 mt-5 p-5">
+        <main className="mt-5 p-5">
             <button className="btn btn-primary col-md-12" onClick={() => { setAgrega(true); setMuestraModal(true); }}>Agregar Contrato</button>
             <TablaContratos contratos={contratos} contratoDetalles={setContrato} abrirModal={setMuestraModal} />
             {muestraModal && <ModalContrato contrato={contrato} agrega={agrega} actualizaTabla={cargaContratos} cerrarModal={cerrarModal} />}

@@ -1,9 +1,13 @@
+import { useState } from "react";
+import { Pagina } from "../../utils/Paginacion";
+import { Paginador } from "../Paginador";
 
 export function TablaLocales({ locales, idDetalles, activaModal }) {
-
+    const [paginaActual, setPaginaActual] = useState(1);
+    const { datosAMostrar, numeroPaginas } = Pagina(locales, paginaActual);
 
     return (
-        <main className='card card-body'>
+        <main className='card card-body position-relative' style={{ minHeight: "500px" }}>
             <table className="table">
                 <thead >
                     <tr>
@@ -14,7 +18,7 @@ export function TablaLocales({ locales, idDetalles, activaModal }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {locales.map(local => (
+                    {datosAMostrar.map(local => (
                         <tr key={local.id}>
                             <td>{local.nombre}</td>
                             <td>{local.direccion}</td>
@@ -24,6 +28,9 @@ export function TablaLocales({ locales, idDetalles, activaModal }) {
                     ))}
                 </tbody>
             </table>
+            <div className="position-absolute bottom-0 start-50 translate-middle-x mb-3">
+                < Paginador numeroPaginas={numeroPaginas} paginaActual={paginaActual} setPaginaActual={setPaginaActual} />
+            </div>
         </main>
     )
 }

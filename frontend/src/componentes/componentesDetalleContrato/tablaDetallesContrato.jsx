@@ -1,7 +1,13 @@
+import { useState } from "react";
+import { Pagina } from "../../utils/Paginacion";
+import { Paginador } from "../Paginador";
 
 export function TablaDetallesContratos({ detallesContratos, mandaDetalleContrato, muestraModal }) {
+    const [paginaActual, setPaginaActual] = useState(1);
+    const { datosAMostrar, numeroPaginas } = Pagina(detallesContratos, paginaActual);
+
     return (
-        <main className="card- card container">
+        <main className="card container position-relative" style={{ minHeight: "500px" }}>
             <table className="table text-center">
                 <thead>
                     <tr>
@@ -13,7 +19,7 @@ export function TablaDetallesContratos({ detallesContratos, mandaDetalleContrato
                     </tr>
                 </thead>
                 <tbody>
-                    {detallesContratos.map(detContrato => (
+                    {datosAMostrar.map(detContrato => (
                         <tr key={detContrato.id}>
                             <td>{detContrato.id_contrato}</td>
                             <td>{detContrato.producto.producto}</td>
@@ -24,6 +30,9 @@ export function TablaDetallesContratos({ detallesContratos, mandaDetalleContrato
                     ))}
                 </tbody>
             </table>
+            <div className="position-absolute bottom-0 start-50 translate-middle-x mb-3">
+                <Paginador numeroPaginas={numeroPaginas} paginaActual={paginaActual} setPaginaActual={setPaginaActual} />
+            </div>
         </main>
     )
 }

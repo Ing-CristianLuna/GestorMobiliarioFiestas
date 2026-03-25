@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 exports.getEmpleados = async (req, res) => {
     try {
-        const empleados = await prisma.empleado.findMany();
+        const empleados = await prisma.empleado.findMany({ include: { local: true } });
         res.json(empleados);
     } catch (error) {
         res.status(404).json({ messsage: "error al cargar" })

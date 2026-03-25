@@ -1,7 +1,13 @@
+import { useState } from "react";
+import { Pagina } from "../../utils/Paginacion";
+import { Paginador } from "../Paginador";
 
 export function TablaProducto({ productos, mandaProducto, activaModal }) {
+    const [paginaActual, setPaginaActual] = useState(1);
+    const { datosAMostrar, numeroPaginas } = Pagina(productos, paginaActual);
+
     return (
-        <main className="card card-body mt-3">
+        <main className="card card-body mt-3 position-relative" style={{ minHeight: "500px" }}>
             <table className="table">
                 <thead>
                     <tr>
@@ -12,7 +18,7 @@ export function TablaProducto({ productos, mandaProducto, activaModal }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {productos.map(producto => (
+                    {datosAMostrar.map(producto => (
                         <tr key={producto.id}>
                             <td>{producto.producto}</td>
                             <td>{producto.descripcion}</td>
@@ -22,6 +28,9 @@ export function TablaProducto({ productos, mandaProducto, activaModal }) {
                     ))}
                 </tbody>
             </table>
+            <div className="position-absolute bottom-0 start-50 translate-middle-x mb-3">
+                < Paginador numeroPaginas={numeroPaginas} paginaActual={paginaActual} setPaginaActual={setPaginaActual} />
+            </div>
         </main>
     )
 }
