@@ -1,5 +1,6 @@
 import { eliminaMensajes } from "../../api/mensaje.api";
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 export function Chatbot({ mensajesGuardados, enviar, actualizaMensajes }) {
     const { register, formState: { errors }, handleSubmit, reset } = useForm();
@@ -10,16 +11,26 @@ export function Chatbot({ mensajesGuardados, enviar, actualizaMensajes }) {
     });
 
     const elimina = () => {
-        console.log("Eliminando mensajes");
-        eliminaMensajes();
-        actualizaMensajes();
+        const confirm = window.confirm("Si cierra conversacion se eliminara todo el chat. Esta seguro?");
+        if (confirm) {
+            console.log("Eliminando mensajes");
+            eliminaMensajes();
+            actualizaMensajes();
+        }
     }
+
+    useEffect(() => {
+        const div = document.getElementById("scroll");
+        if (div) {
+            div.scrollTop = div.scrollHeight;
+        }
+    }, [actualizaMensajes]);
 
     return (
         <main>
             <div className="card card-body w-50 mx-auto border" style={{ width: "650px" }}>
                 <h3>Chatbot 🤖</h3>
-                <div className="overflow-auto" style={{ height: "380px" }}>
+                <div id="scroll" className="overflow-auto" style={{ height: "380px" }}>
                     {mensajesGuardados.map(m => {
                         if (m.rol === "usuario") {
                             return (
@@ -52,10 +63,13 @@ export function Chatbot({ mensajesGuardados, enviar, actualizaMensajes }) {
                                 Terminar conversacion</button>
                         </div>
                         <div className="col-md-4">
-                            <button className="btn btn-outline-secondary" style={{ fontSize: "12px" }}>Que puedo preguntar?</button>
+                            <button className="btn btn-outline-secondary" style={{ fontSize: "12px" }}
+                                onClick={() => { enviar("Que puedo preguntar?") }}>Que puedo preguntar?</button>
                         </div>
                         <div className="col-md-4">
-                            <button className="btn btn-outline-secondary" style={{ fontSize: "12px" }}>Cual es tu objetivo?</button>
+                            <button className="btn btn-outline-secondary" style={{ fontSize: "12px" }}
+                                onClick={() => enviar("Cual es tu objetivo?")}
+                            >Cual es tu objetivo?</button>
                         </div>
                     </div>
                     <input className="form-control my-3 rounded-pill" autoComplete="off" placeholder="Escribe..." {...register("contenido", { required: true })} />

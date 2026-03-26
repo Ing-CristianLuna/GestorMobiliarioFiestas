@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-
 const localRoutes = require("./routes/local.routes"); //trae todas las rutas(app) de local
 const localRegisterRoutes = require("./routes/localRegister.routes")
 const empleadoRoutes = require("./routes/empleado.routes");

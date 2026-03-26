@@ -1,11 +1,22 @@
 import { useForm } from "react-hook-form";
 import { registerUser } from "../../../api/user.api";
 import { useNavigate } from "react-router-dom";
-import { SelectLocal } from "../../selects/SelectLocal";
+import { getLocalesRegister } from "../../../api/localApi";
+import { useEffect, useState } from "react";
 
 export function FormRegister() {
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
+    const [locales, setLocales] = useState([]);
     const navega = useNavigate();
+
+    useEffect(() => {
+        async function cargaLocales() {
+            const res = await getLocalesRegister();
+            setLocales(res.data);
+        }
+        cargaLocales();
+    }, []);
+
     const password = watch("password");
 
     const onSubmit = handleSubmit(async (data) => {
@@ -24,10 +35,21 @@ export function FormRegister() {
                         <input className="form-control" type="text" placeholder="nombre..." {...register("nombre", { required: true })}></input>
                         {errors.nombre && <span>Es requerido su nombre.</span>}
                     </div>
+
                     <div className="col-md-6">
-                        <SelectLocal register={register} errors={errors} />
+                        <label className="form-label">Seleccione el local:</label>
+                        <select className="form-select" key={locales.length} {...register("id_local", { setValueAs: (value) => Number(value), validate: value => value !== 0 })}>
+                            <option value={0}>Seleccione un local</option>
+                            {locales.map(local => (
+                                <option key={local.id} value={local.id}>
+                                    {local.nombre}
+                                </option>
+                            ))}
+                        </select>
+                        {errors.local_id && <span className="text-danger">Tiene que seleccionar una opcion</span>}
                     </div>
-                    <div className="col-md-12">
+
+                    <div className="col-md-8">
                         <label className="form-label">Ingrese su correo:</label>
                         <input className="form-control" type="text" placeholder="correo..." {...register("correo", { required: true })}></input>
                         {errors.correo && <span>Es requerido el correo.</span>}

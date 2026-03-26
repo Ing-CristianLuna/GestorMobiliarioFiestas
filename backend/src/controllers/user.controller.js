@@ -7,10 +7,11 @@ const prisma = new PrismaClient();
 
 exports.createUser = async (req, res) => {
     try {
-        const { nombre, correo, password } = req.body;
+        const { nombre, correo, password, id_local } = req.body;
         const hash = await bcrypt.hash(password, 10);
         const usuarioCreado = await prisma.user.create({
-            data: { nombre, correo, password: hash }
+            data: { nombre, correo, password: hash, local: { connect: { id: id_local } } },
+            include: { local: true }
         });
         const token = jwt.sign(
             { id: usuarioCreado.id, correo: usuarioCreado.correo },

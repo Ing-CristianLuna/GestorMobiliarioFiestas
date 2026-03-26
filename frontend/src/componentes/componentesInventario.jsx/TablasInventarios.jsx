@@ -11,7 +11,6 @@ export function TablaInventarios({ inventarios, mandaInventario, muestraModal })
             <table className="table">
                 <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Producto</th>
                         <th>Cantidad Total</th>
                         <th>Cantidad Ocupada</th>
